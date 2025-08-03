@@ -1,0 +1,152 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment Page</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .payment-container {
+      background: #fff;
+      padding: 30px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    .payment-container h2 {
+      margin-bottom: 20px;
+      color: #333;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+      font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .btn {
+      background-color: #28a745;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #218838;
+    }
+
+    .summary {
+      background-color: #f1f1f1;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      color: #444;
+    }
+
+    .upi-section {
+      display: none;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .upi-section img {
+      margin-top: 10px;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .payment-container {
+        padding: 20px;
+        margin: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="payment-container">
+    <h2>Secure Payment</h2>
+    
+    <form action="/submit-payment" method="POST">
+      <label for="name">Cardholder Name</label>
+      <input type="text" id="name" name="name" placeholder="John Doe" required>
+
+      <label for="card">Card Number</label>
+      <input type="text" id="card" name="card" placeholder="1234 5678 9012 3456" maxlength="19" required>
+
+      <label for="expiry">Expiry Date</label>
+      <input type="text" id="expiry" name="expiry" placeholder="MM/YY" maxlength="5" required>
+
+      <label for="cvv">CVV</label>
+      <input type="password" id="cvv" name="cvv" placeholder="123" maxlength="4" required>
+
+      <label for="method">Payment Method</label>
+      <select id="method" name="method" onchange="toggleUPISection()">
+        <option value="credit">Credit Card</option>
+        <option value="debit">Debit Card</option>
+        <option value="upi">UPI</option>
+        <option value="netbanking">Net Banking</option>
+      </select>
+
+      <div id="upiSection" class="upi-section">
+        <h3>Make the payment using the QR Code</h3>
+        <img src="../UI/paymentqr.png.jpg" alt="QR Code for UPI Payment" width="300">
+      </div>
+
+      <button type="submit" class="btn">Pay Now</button>
+    </form>
+
+    <div class="summary">
+      <p><strong>Total:</strong> ₹1,299.00</p>
+      <p><strong>Items:</strong> 3</p>
+    </div>
+  </div>
+
+  <script>
+    function toggleUPISection() {
+      const method = document.getElementById("method").value;
+      const upiSection = document.getElementById("upiSection");
+      upiSection.style.display = method === "upi" ? "block" : "none";
+    }
+
+    // Ensure correct display on load
+    window.onload = toggleUPISection;
+  </script>
+
+</body>
+</html>
